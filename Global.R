@@ -36,3 +36,4 @@ library(ggmap)
 #View(filter(map_data("county"),region =="new york"))
 bronx_points=filter(bronxmap, Match=='Match') %>% 
  mutate(Longitude = sub(',.*','',Latitude),Latitude= sub(".*,",'',Latitude))
+bronx_unmatched = filter(bronxmap, Match=='No_Match')
