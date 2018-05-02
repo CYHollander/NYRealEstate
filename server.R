@@ -14,7 +14,8 @@ server <- function(input, output, session) {
                  weight=case_when(input$wt=='Price' ~ sales$SALE_PRICE/max(sales$SALE_PRICE),
                    input$wt=='Square feet' ~ sales$GROSS_SQUARE_FEET/max(sales$GROSS_SQUARE_FEET),
                    input$wt=='Price per square foot' ~ sales$ppsqf/max(sales$ppsqf),
-                   TRUE ~ 1/maxwt)*maxwt
+                   TRUE ~ 1/maxwt)*maxwt,
+                 color=c('blue','red')[1+as.integer(substring(sales$TAX_CLASS_AT_PRESENT,1,1))%/%3]
       )
     })
 }
