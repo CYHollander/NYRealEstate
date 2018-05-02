@@ -4,12 +4,32 @@ library(RSQLite)
 library(data.table)
 library(readxl)
 
-boroughs1 =c('manhattan','bronx','brooklyn','queens','si')
-boroughs2 = append(boroughs1[1:4],'statenisland')
+
+
+#Given a year and a borough, returns the name of the 
+#corresponding .xls file in the data folder
+#borough is a number from 1 to 5
+data_file_name = function (borough, year)
+{
+  boroughs1 =c('manhattan','bronx','brooklyn','queens','si')
+  boroughs2 = append(boroughs1[1:4],'statenisland')
+
+  return
+  case_when(
+    year >= 2003 & year <=2006 ~ 
+      paste0('sales_',boroughs1[borough],'_0',year-2000,'.xls'),
+    year == 2007 | year == 2008 ~
+      paste0('sales_',year,'_',boroughs2[borough],'.xls'),
+    year >= 2009 & year <= 2015 ~
+      paste0(year,'_',boroughs2[borough],'.xls')
+  )
+}
+
+load_data = function (boroughs
 
 file_names=vector()
-for (name in boroughs1)
-  for (year in (3:6))
+for (year in (3:6))
+  for (name in boroughs1)
     file_names=c(file_names,paste0('sales_',name,'_0',year,'.xls'))
 
 for (year in (2007:2008))
