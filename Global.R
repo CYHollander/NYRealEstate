@@ -25,14 +25,15 @@ bronx2=mutate(bronx1, City = 'New York',State="NY") %>%
 fwrite(bronx2,"bronx_2015_addresses.csv")
 #Here I obtained a geocoded list of addresses by uploading uploading bronx_2015_addresses.csv
 #by hand to https://geocoding.geo.census.gov/geocoder/locations/addressbatch 
-bronxmap=fread('/Users/c.y./Documents/NYCDSA/Shiny/Shiny apps/NYRealEstate/Bronx2015geocoded.csv',
+bronxmap=fread('./Bronx2015geocoded.csv',
                header=FALSE, fill=TRUE)
 colnames(bronxmap) = c('ID','Address','Match','Exact','Inferred','Latitude','Longitude','RL')
 bronxmap$ID=type.convert(bronxmap$ID, as.is = T)
 bronx_points=filter(bronxmap, Match=='Match') %>% 
   mutate(Longitude = sub(',.*','',Latitude),Latitude= sub(".*,",'',Latitude))
 bronx_unmatched = filter(bronxmap, Match=='No_Match')
-bronx3=inner_join(bronx_points,bronx1)
+bronx3=inner_join(bronx_points,bronx1) %>% 
+  mutate (ppsqf = ifelse(SALE_PRICE >0, GROSS_SQUARE_FEET/SALE_PRICE, NA))
 
 load_data = function(boroughs, year)
   #boroughs is a vector containing a range of numbers between 1 and 5

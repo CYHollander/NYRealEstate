@@ -6,8 +6,11 @@ dashboardPage(
     sidebarUserPanel("C. Y.", image = "Face.jpg"),
     selectizeInput(inputId="year",
                    label="Year",
-                   choices=(2015))
-    
+                   choices=(2015)),
+    selectizeInput("wt",
+                   label="Weight by",
+                   choices=c('Constant','Price','Square feet','Price per square foot')
+                    )
     ),
   dashboardBody(leafletOutput("nyc"),
                 sliderInput("dates",
