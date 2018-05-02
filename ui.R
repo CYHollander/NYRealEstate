@@ -14,7 +14,7 @@ dashboardPage(
     ),
   dashboardBody(leafletOutput("nyc"),
                 sliderInput("dates",
-                            "Months:",
+                            "Dates:",
                             min = mindate,
                             max = maxdate,
                             value = c(mindate,maxdate))
