@@ -30,7 +30,8 @@ bronxmap=fread('./Bronx2015geocoded.csv',
 colnames(bronxmap) = c('ID','Address','Match','Exact','Inferred','Latitude','Longitude','RL')
 bronxmap$ID=type.convert(bronxmap$ID, as.is = T)
 bronx_points=filter(bronxmap, Match=='Match') %>% 
-  mutate(Longitude = sub(',.*','',Latitude),Latitude= sub(".*,",'',Latitude))
+  mutate(Longitude = as.numeric(sub(',.*','',Latitude)),
+         Latitude= as.numeric(sub(".*,",'',Latitude)))
 bronx_unmatched = filter(bronxmap, Match=='No_Match')
 bronx3=inner_join(bronx_points,bronx1) %>% 
   mutate (ppsqf = ifelse(SALE_PRICE >0, GROSS_SQUARE_FEET/SALE_PRICE, NA))

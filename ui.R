@@ -15,8 +15,10 @@ dashboardPage(
   dashboardBody(leafletOutput("nyc"),
                 sliderInput("dates",
                             "Dates:",
+                            timeFormat = ("%F"),
                             min = mindate,
                             max = maxdate,
-                            value = c(mindate,maxdate))
+                            value = c(mindate,mindate+30*60*60*24),
+                            animate= TRUE)
                 )
 )
